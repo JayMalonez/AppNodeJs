@@ -1,0 +1,7 @@
+POST http://localhost:3000/api/converter
+content-type: application/json
+
+{
+    "type": "test",
+    "value" : 123
+}
