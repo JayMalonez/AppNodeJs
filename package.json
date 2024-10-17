@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/JayMalonez/AppNodeJs/issues"
   },
-  "homepage": "https://github.com/JayMalonez/AppNodeJs#readme"
+  "homepage": "https://github.com/JayMalonez/AppNodeJs#readme",
+  "dependencies": {
+    "express": "^4.21.1"
+  }
 }
