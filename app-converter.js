@@ -1,4 +1,5 @@
 const express = require('express');
+const axios = require('axios');
 
 const app = express();
 app.use(express.json());
@@ -27,6 +28,7 @@ app.post('/api/converter', (req, res) => {
     let fahrenheit = 0;
     let BTC = 0;
     let USD = 0;
+    let usd_rate = 0;
 
     switch(data.type) {
         case "feet2meter":
@@ -55,17 +57,29 @@ app.post('/api/converter', (req, res) => {
             return;
         case "BTC2USD":
             BTC = data.value;
-            USD = (fahrenheit - 32) * (5/9);
-
             
+            axios.get("https://api.coindesk.com/v1/bpi/currentprice.json")
+            .then(
+                response => {
+                    usd_rate = response.data.bpi.USD.rate_float;
+                    USD = BTC * usd_rate;
+                    res.send('La valeur ' + BTC + ' en USD = $' + USD);
+                }
+            );
 
-            res.send('La valeur ' + fahrenheit + ' en celsius = ' + celsius + '°C');
             return;
         case "USD2BTC":
             USD = data.value;
-            BTC = (fahrenheit - 32) * (5/9);
-
-            res.send('La valeur ' + fahrenheit + ' en celsius = ' + celsius + '°C');
+            
+            axios.get("https://api.coindesk.com/v1/bpi/currentprice.json")
+            .then(
+                response => {
+                    usd_rate = response.data.bpi.USD.rate_float;
+                    BTC = (USD / usd_rate);
+                    res.send('La valeur ' + USD + ' en Bitcoin = ' + BTC);
+                }
+            );
+            
             return;
         default:
             res.send('Ce type est indisponible.');

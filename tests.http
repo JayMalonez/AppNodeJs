@@ -2,6 +2,6 @@ POST http://localhost:3000/api/converter
 content-type: application/json
 
 {
-    "type": "test",
-    "value" : 123
+    "type" : "USD2BTC",
+    "value" : 67077.4497
 }
